@@ -1,0 +1,30 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v7
+        with:
+          repository: pzhlkj6612/forked-install-qt-action
+          ref: 8476557dad3c57acdf224225d654de57f37d5b74
+
+      - run: |
+          cd ./action
+          npm ci
+          npm run build
+
+      # See the root "action.yml" file.
+      - name: Use local built internal action (hack)
+        run: |
+          sed -i.bak 's|uses: $/action|uses: ./action|' action.yml
+          diff -u action.yml.bak action.yml || true
+          git status --porcelain
+        shell: bash
+        
+      - name: Install Qt
+        uses: ./
