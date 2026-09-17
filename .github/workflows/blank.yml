@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           repository: pzhlkj6612/forked-install-qt-action
-          ref: fc925776394d3bdc3110b9d00906dd8a2013ea69
+          ref: 714816eb8b13072efc2be2c9e3d840fd5c2335c5
 
       - run: |
           cd ./action
